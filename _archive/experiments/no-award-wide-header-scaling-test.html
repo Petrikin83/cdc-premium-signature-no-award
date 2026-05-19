@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>No-Award Wide Header Scaling Test — CDC Signature Prototypes</title>
+<style>
+/* ── page chrome only — not part of email HTML ── */
+body { font-family: Arial, sans-serif; background: #e8e8e8; padding: 30px 20px; margin: 0; color: #222; }
+h1 { font-size: 20px; margin: 0 0 5px; color: #1a1a2e; }
+.meta { font-size: 12.5px; color: #666; margin: 0 0 36px; line-height: 1.75; max-width: 820px; }
+.meta code { background: #eee; padding: 1px 4px; border-radius: 3px; font-size: 11px; }
+.v { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 32px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.vt { font-size: 16px; font-weight: bold; margin: 0 0 2px; color: #1a1a2e; }
+.vs { font-size: 12px; color: #F16623; font-weight: 600; margin: 0 0 16px; }
+.row { display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap; }
+.col { flex: 0 0 auto; }
+.lbl { font-size: 10px; color: #bbb; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+/* iPhone mock — 372px inner × 220px → 64.1% scale */
+.iphone { width: 372px; height: 220px; border: 8px solid #1c1c1e; border-radius: 36px; overflow: hidden; background: #fff; box-shadow: 0 5px 18px rgba(0,0,0,0.22); }
+.iscr { transform-origin: top left; transform: scale(0.641); width: 580px; overflow: hidden; padding: 8px 0; }
+.an { font-size: 12px; color: #555; line-height: 1.75; margin: 18px 0 0; padding: 13px 16px; background: #f8f8f8; border-left: 3px solid #ddd; border-radius: 0 4px 4px 0; max-width: 820px; }
+.an b { color: #222; }
+.lo { color: #28a745; font-weight: 700; }
+.mo { color: #e67e22; font-weight: 700; }
+.hi { color: #dc3545; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<h1>No-Award Wide Header Scaling Test</h1>
+<p class="meta">
+  <b>Goal:</b> Find a no-award header design that makes Gmail app on iPhone treat the signature as a full 580px block and apply proportional scale-to-fit — rather than content-reflow (which causes address to wrap and 2×2 grid to shift).<br>
+  <b>Hypothesis:</b> The award <code>&lt;img width="184"&gt;</code> forced Gmail app to see a hard 580px content width. Without it, Gmail collapses the empty right column and reflows at ~375px, causing layout instability.<br>
+  <b>Test data:</b> Anna Bergmann · Head of Corporate Operations · +39 0471 886 501 · a.bergmann@cdc.company · 39040 Neustatt 6, Aldein (BZ), Italy · cdc.company<br>
+  <b>Base commit:</b> 69dff0d — last known working with-banner structure · <b>iPhone mock:</b> 64.1% CSS scale (≈ Gmail proportional scale-to-fit on 375px viewport)
+</p>
+
+<!-- ═══════════════════════════════════════════════════════════ VARIANT A -->
+<div class="v">
+<div class="vt">Variant A — Current Baseline</div>
+<div class="vs">69dff0d structure · empty right 184px cell · contact table width="100%"</div>
+<div class="row">
+  <div class="col">
+    <div class="lbl">Desktop Preview</div>
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC" style="display: block; border: 0; height: auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="259" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 21px;
+                    font-weight: 700; color: #1a1a2e; line-height: 1.15; margin: 0 0 5px 0;">
+            Anna Bergmann
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 400; color: #555555; line-height: 1.3; margin: 0 0 3px 0;">
+            Head of Corporate Operations
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 600; color: #F16623; line-height: 1.3; margin: 0;">
+            Cableway Development Company
+          </p>
+        </td>
+        <td width="1" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 0; font-size: 0; line-height: 0; vertical-align: middle;">
+          <table width="1" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr><td width="1" height="64" bgcolor="#eeeeee"
+                    style="background-color: #eeeeee; font-size: 0; line-height: 0; width: 1px; height: 64px;"></td></tr>
+          </table>
+        </td>
+        <td width="14" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="184" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 0; font-size: 0; line-height: 0;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr>
+              <td valign="middle" style="padding: 0 32px 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                     width="24" height="24" alt="Phone"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="tel:+390471886501"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >+39&nbsp;0471&nbsp;886&nbsp;501</a>
+              </td>
+              <td valign="middle" style="padding: 0 0 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                     width="24" height="24" alt="Email"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="mailto:a.bergmann@cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >a.bergmann@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding: 0 32px 0 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                     width="24" height="24" alt="Location"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><span
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #555555; vertical-align: middle;
+                         margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td valign="middle" style="padding: 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                     width="24" height="24" alt="Website"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="https://cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 9px 0 14px 0;">
+          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 10px;
+                       font-weight: 400; color: #666666; line-height: 1.45; display: block;">
+            This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates and is intended solely for the use of the individual or entity to whom it is addressed. If you have received this email in error, please notify the sender immediately.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col">
+    <div class="lbl">iPhone Scale Preview (64.1%)</div>
+    <div class="iphone"><div class="iscr">
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC" style="display: block; border: 0; height: auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="259" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 21px;
+                    font-weight: 700; color: #1a1a2e; line-height: 1.15; margin: 0 0 5px 0;">
+            Anna Bergmann
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 400; color: #555555; line-height: 1.3; margin: 0 0 3px 0;">
+            Head of Corporate Operations
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 600; color: #F16623; line-height: 1.3; margin: 0;">
+            Cableway Development Company
+          </p>
+        </td>
+        <td width="1" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 0; font-size: 0; line-height: 0;"></td>
+        <td width="14" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="184" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 0; font-size: 0; line-height: 0;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr>
+              <td valign="middle" style="padding: 0 32px 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                     width="24" height="24" alt="Phone"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="tel:+390471886501"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >+39&nbsp;0471&nbsp;886&nbsp;501</a>
+              </td>
+              <td valign="middle" style="padding: 0 0 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                     width="24" height="24" alt="Email"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="mailto:a.bergmann@cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >a.bergmann@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding: 0 32px 0 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                     width="24" height="24" alt="Location"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><span
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #555555; vertical-align: middle;
+                         margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td valign="middle" style="padding: 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                     width="24" height="24" alt="Website"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="https://cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 9px 0 14px 0;">
+          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 10px;
+                       font-weight: 400; color: #666666; line-height: 1.45; display: block;">
+            This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates...
+          </span>
+        </td>
+      </tr>
+    </table>
+    </div></div>
+  </div>
+</div>
+<div class="an">
+  <b>Visual structure:</b> Logo (104px left) · 18px spacer · Identity (259px) · 1px grey separator · 14px spacer · empty 184px right cell.<br>
+  <b>Column math:</b> 104 + 18 + 259 + 1 + 14 + 184 = 580px. Contact table: <code>width="100%"</code>, two auto-width columns.<br>
+  <b>Visually fills 580px:</b> No — right side is empty. Header visually occupies only ~400px (logo + identity).<br>
+  <b>Gmail scale-to-fit likelihood:</b> <span class="hi">LOW</span> — empty right column; Gmail may collapse it and reflow at narrower width.<br>
+  <b>Address stays one line:</b> <span class="hi">UNLIKELY in Gmail app</span> — auto-distributed contact columns at reflow width may be too narrow for 283px address text.<br>
+  <b>Design quality:</b> Clean and minimal. Looks intentional on desktop. Problematic on Gmail app iPhone.<br>
+  <b>Risk:</b> This is the currently failing baseline. Shown for comparison only.
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ VARIANT B -->
+<div class="v">
+<div class="vt">Variant B — Wider Identity Block</div>
+<div class="vs">Identity spans full right side (458px) · no separator · no right content · contact width="100%"</div>
+<div class="row">
+  <div class="col">
+    <div class="lbl">Desktop Preview</div>
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <!-- Ghost row locks 6-col widths for contact colspan compatibility -->
+      <tr>
+        <td width="104" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="18"  bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="259" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="1"   bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="14"  bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="184" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+      </tr>
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC" style="display: block; border: 0; height: auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <!-- Identity colspan=4: covers 259+1+14+184=458px -->
+        <td width="259" colspan="4" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 21px;
+                    font-weight: 700; color: #1a1a2e; line-height: 1.15; margin: 0 0 5px 0;">
+            Anna Bergmann
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 400; color: #555555; line-height: 1.3; margin: 0 0 3px 0;">
+            Head of Corporate Operations
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 600; color: #F16623; line-height: 1.3; margin: 0;">
+            Cableway Development Company
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr>
+              <td valign="middle" style="padding: 0 32px 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                     width="24" height="24" alt="Phone"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="tel:+390471886501"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >+39&nbsp;0471&nbsp;886&nbsp;501</a>
+              </td>
+              <td valign="middle" style="padding: 0 0 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                     width="24" height="24" alt="Email"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="mailto:a.bergmann@cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >a.bergmann@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding: 0 32px 0 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                     width="24" height="24" alt="Location"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><span
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #555555; vertical-align: middle;
+                         margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td valign="middle" style="padding: 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                     width="24" height="24" alt="Website"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="https://cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 9px 0 14px 0;">
+          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 10px;
+                       font-weight: 400; color: #666666; line-height: 1.45; display: block;">
+            This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates and is intended solely for the use of the individual or entity to whom it is addressed. If you have received this email in error, please notify the sender immediately.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col">
+    <div class="lbl">iPhone Scale Preview (64.1%)</div>
+    <div class="iphone"><div class="iscr">
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="18"  bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="259" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="1"   bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="14"  bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="184" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+      </tr>
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC" style="display: block; border: 0; height: auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="259" colspan="4" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 21px;
+                    font-weight: 700; color: #1a1a2e; line-height: 1.15; margin: 0 0 5px 0;">Anna Bergmann</p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 400; color: #555555; line-height: 1.3; margin: 0 0 3px 0;">Head of Corporate Operations</p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 600; color: #F16623; line-height: 1.3; margin: 0;">Cableway Development Company</p>
+        </td>
+      </tr>
+      <tr><td colspan="6" height="1" bgcolor="#e0e0e0" style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;"></td></tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff;padding:10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+            <tr>
+              <td valign="middle" style="padding:0 32px 8px 0;vertical-align:middle;white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png" width="24" height="24" alt="Phone" style="display:inline-block;vertical-align:middle;border:0;"><a href="tel:+390471886501" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">+39&nbsp;0471&nbsp;886&nbsp;501</a>
+              </td>
+              <td valign="middle" style="padding:0 0 8px 0;vertical-align:middle;white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png" width="24" height="24" alt="Email" style="display:inline-block;vertical-align:middle;border:0;"><a href="mailto:a.bergmann@cdc.company" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">a.bergmann@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding:0 32px 0 0;vertical-align:middle;white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png" width="24" height="24" alt="Location" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#555555;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td valign="middle" style="padding:0;vertical-align:middle;white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png" width="24" height="24" alt="Website" style="display:inline-block;vertical-align:middle;border:0;"><a href="https://cdc.company" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td colspan="6" height="1" bgcolor="#e0e0e0" style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;"></td></tr>
+      <tr><td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff;padding:9px 0 14px 0;"><span style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:400;color:#666666;line-height:1.45;display:block;">This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates...</span></td></tr>
+    </table>
+    </div></div>
+  </div>
+</div>
+<div class="an">
+  <b>Visual structure:</b> Logo (104px) · 18px spacer · Identity spanning full remaining 458px (no separator, no right content).<br>
+  <b>Column math:</b> Ghost row: 104+18+259+1+14+184=580. Header: identity <code>colspan="4"</code> → 259+1+14+184=458px. Contact: <code>width="100%"</code>.<br>
+  <b>Visually fills 580px:</b> Slightly better than A — identity cell claims the full right area. But content (text) does not fill the cell visually.<br>
+  <b>Gmail scale-to-fit likelihood:</b> <span class="hi">LOW</span> — no hard-pixel-width content on the right. Gmail still sees flexible text in a declared-wide cell.<br>
+  <b>Address stays one line:</b> <span class="hi">UNLIKELY in Gmail app</span> — contact table still auto-distributes with no fixed anchoring.<br>
+  <b>Design quality:</b> Clean. Header is more balanced because the identity cell is not artificially cut off on the right. Looks intentional.<br>
+  <b>Risk:</b> Structurally safer (no hanging separator). Does not solve the Gmail scaling problem. Visual improvement only.
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ VARIANT C -->
+<div class="v">
+<div class="vt">Variant C — Full-Width Orange Accent Bar</div>
+<div class="vs">Brand accent line spans full 580px after header · forces table visual width · real design element</div>
+<div class="row">
+  <div class="col">
+    <div class="lbl">Desktop Preview</div>
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="18"  bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="259" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="1"   bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="14"  bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="184" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+      </tr>
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC" style="display: block; border: 0; height: auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="259" colspan="4" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 21px;
+                    font-weight: 700; color: #1a1a2e; line-height: 1.15; margin: 0 0 5px 0;">
+            Anna Bergmann
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 400; color: #555555; line-height: 1.3; margin: 0 0 3px 0;">
+            Head of Corporate Operations
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 600; color: #F16623; line-height: 1.3; margin: 0;">
+            Cableway Development Company
+          </p>
+        </td>
+      </tr>
+      <!-- Orange accent bar — spans full 580px — brand element -->
+      <tr>
+        <td colspan="6" height="3" bgcolor="#F16623"
+            style="height: 3px; background-color: #F16623; font-size: 0; line-height: 0;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr>
+              <td valign="middle" style="padding: 0 32px 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                     width="24" height="24" alt="Phone"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="tel:+390471886501"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >+39&nbsp;0471&nbsp;886&nbsp;501</a>
+              </td>
+              <td valign="middle" style="padding: 0 0 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                     width="24" height="24" alt="Email"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="mailto:a.bergmann@cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >a.bergmann@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding: 0 32px 0 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                     width="24" height="24" alt="Location"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><span
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #555555; vertical-align: middle;
+                         margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td valign="middle" style="padding: 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                     width="24" height="24" alt="Website"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="https://cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 9px 0 14px 0;">
+          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 10px;
+                       font-weight: 400; color: #666666; line-height: 1.45; display: block;">
+            This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates and is intended solely for the use of the individual or entity to whom it is addressed. If you have received this email in error, please notify the sender immediately.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col">
+    <div class="lbl">iPhone Scale Preview (64.1%)</div>
+    <div class="iphone"><div class="iscr">
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="18"  bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="259" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="1"   bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="14"  bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="184" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+      </tr>
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff" style="background-color:#ffffff;padding:14px 0;vertical-align:middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png" width="104" alt="CDC" style="display:block;border:0;height:auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <td width="259" colspan="4" valign="middle" bgcolor="#ffffff" style="background-color:#ffffff;padding:14px 0;vertical-align:middle;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:21px;font-weight:700;color:#1a1a2e;line-height:1.15;margin:0 0 5px 0;">Anna Bergmann</p>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#555555;line-height:1.3;margin:0 0 3px 0;">Head of Corporate Operations</p>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:600;color:#F16623;line-height:1.3;margin:0;">Cableway Development Company</p>
+        </td>
+      </tr>
+      <tr><td colspan="6" height="3" bgcolor="#F16623" style="height:3px;background-color:#F16623;font-size:0;line-height:0;"></td></tr>
+      <tr><td colspan="6" height="1" bgcolor="#e0e0e0" style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;"></td></tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff;padding:10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+            <tr>
+              <td valign="middle" style="padding:0 32px 8px 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png" width="24" height="24" alt="Phone" style="display:inline-block;vertical-align:middle;border:0;"><a href="tel:+390471886501" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">+39&nbsp;0471&nbsp;886&nbsp;501</a></td>
+              <td valign="middle" style="padding:0 0 8px 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png" width="24" height="24" alt="Email" style="display:inline-block;vertical-align:middle;border:0;"><a href="mailto:a.bergmann@cdc.company" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">a.bergmann@cdc.company</a></td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding:0 32px 0 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png" width="24" height="24" alt="Location" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#555555;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">39040 Neustatt 6, Aldein (BZ), Italy</span></td>
+              <td valign="middle" style="padding:0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png" width="24" height="24" alt="Website" style="display:inline-block;vertical-align:middle;border:0;"><a href="https://cdc.company" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">cdc.company</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td colspan="6" height="1" bgcolor="#e0e0e0" style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;"></td></tr>
+      <tr><td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff;padding:9px 0 14px 0;"><span style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:400;color:#666666;line-height:1.45;display:block;">This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates...</span></td></tr>
+    </table>
+    </div></div>
+  </div>
+</div>
+<div class="an">
+  <b>Visual structure:</b> Logo (104px) · spacer · Identity (458px) · 3px orange accent bar spanning full 580px · grey divider · 2×2 contacts · disclaimer.<br>
+  <b>Column math:</b> Header identity spans 4 cols = 458px. Orange bar <code>colspan="6"</code> = 580px. Contact: <code>width="100%"</code>.<br>
+  <b>Visually fills 580px:</b> YES — the orange bar is a visual element that renders across the full declared table width. It makes the signature feel wide and structured.<br>
+  <b>Gmail scale-to-fit likelihood:</b> <span class="mo">MODERATE</span> — the accent bar's background-color spans 580px (a CSS property, not an img). Gmail may or may not count this as hard width. Uncertain. Worth testing.<br>
+  <b>Address stays one line:</b> <span class="hi">UNLIKELY in Gmail app</span> — contact table still auto-distributes. Same problem as A/B.<br>
+  <b>Design quality:</b> Strong. The orange accent bar is a legitimate premium brand element used in professional email signatures. Removes the "something is missing on the right" feeling without adding fake content.<br>
+  <b>Risk:</b> If Gmail ignores the background-color for width calculation, this has the same scaling problem as A. But it looks the best of the non-right-panel variants.
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ VARIANT D -->
+<div class="v">
+<div class="vt">Variant D — Right-Side Brand Text Panel</div>
+<div class="vs">Company domain + name in right 184px cell · white-space:nowrap text anchor · separator retained · no transparent image</div>
+<div class="row">
+  <div class="col">
+    <div class="lbl">Desktop Preview</div>
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC" style="display: block; border: 0; height: auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="259" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 21px;
+                    font-weight: 700; color: #1a1a2e; line-height: 1.15; margin: 0 0 5px 0;">
+            Anna Bergmann
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 400; color: #555555; line-height: 1.3; margin: 0 0 3px 0;">
+            Head of Corporate Operations
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 600; color: #F16623; line-height: 1.3; margin: 0;">
+            Cableway Development Company
+          </p>
+        </td>
+        <!-- Separator — makes sense because right panel has content -->
+        <td width="1" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 0; font-size: 0; line-height: 0; vertical-align: middle;">
+          <table width="1" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr><td width="1" height="64" bgcolor="#eeeeee"
+                    style="background-color: #eeeeee; font-size: 0; line-height: 0; width: 1px; height: 64px;"></td></tr>
+          </table>
+        </td>
+        <td width="14" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <!-- Brand text panel — 184px · white-space:nowrap content anchors column -->
+        <td width="184" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0 14px 0; vertical-align: middle; text-align: right;">
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px;
+                    font-weight: 700; color: #F16623; line-height: 1.1; margin: 0 0 4px 0;
+                    text-align: right; white-space: nowrap;">
+            cdc.company
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 9px;
+                    font-weight: 400; color: #bbbbbb; letter-spacing: 0.06em;
+                    text-transform: uppercase; line-height: 1.5; margin: 0;
+                    text-align: right; white-space: nowrap;">
+            Cableway Development Company
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr>
+              <td valign="middle" style="padding: 0 32px 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                     width="24" height="24" alt="Phone"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="tel:+390471886501"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >+39&nbsp;0471&nbsp;886&nbsp;501</a>
+              </td>
+              <td valign="middle" style="padding: 0 0 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                     width="24" height="24" alt="Email"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="mailto:a.bergmann@cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >a.bergmann@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding: 0 32px 0 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                     width="24" height="24" alt="Location"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><span
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #555555; vertical-align: middle;
+                         margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td valign="middle" style="padding: 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                     width="24" height="24" alt="Website"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="https://cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 9px 0 14px 0;">
+          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 10px;
+                       font-weight: 400; color: #666666; line-height: 1.45; display: block;">
+            This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates and is intended solely for the use of the individual or entity to whom it is addressed. If you have received this email in error, please notify the sender immediately.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col">
+    <div class="lbl">iPhone Scale Preview (64.1%)</div>
+    <div class="iphone"><div class="iscr">
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff" style="background-color:#ffffff;padding:14px 0;vertical-align:middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png" width="104" alt="CDC" style="display:block;border:0;height:auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <td width="259" valign="middle" bgcolor="#ffffff" style="background-color:#ffffff;padding:14px 0;vertical-align:middle;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:21px;font-weight:700;color:#1a1a2e;line-height:1.15;margin:0 0 5px 0;">Anna Bergmann</p>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#555555;line-height:1.3;margin:0 0 3px 0;">Head of Corporate Operations</p>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:600;color:#F16623;line-height:1.3;margin:0;">Cableway Development Company</p>
+        </td>
+        <td width="1" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="14" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <td width="184" valign="middle" bgcolor="#ffffff" style="background-color:#ffffff;padding:14px 0;vertical-align:middle;text-align:right;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:700;color:#F16623;line-height:1.1;margin:0 0 4px 0;text-align:right;white-space:nowrap;">cdc.company</p>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:400;color:#bbbbbb;letter-spacing:0.06em;text-transform:uppercase;line-height:1.5;margin:0;text-align:right;white-space:nowrap;">Cableway Development Company</p>
+        </td>
+      </tr>
+      <tr><td colspan="6" height="1" bgcolor="#e0e0e0" style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;"></td></tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff;padding:10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+            <tr>
+              <td valign="middle" style="padding:0 32px 8px 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png" width="24" height="24" alt="Phone" style="display:inline-block;vertical-align:middle;border:0;"><a href="tel:+390471886501" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">+39&nbsp;0471&nbsp;886&nbsp;501</a></td>
+              <td valign="middle" style="padding:0 0 8px 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png" width="24" height="24" alt="Email" style="display:inline-block;vertical-align:middle;border:0;"><a href="mailto:a.bergmann@cdc.company" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">a.bergmann@cdc.company</a></td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding:0 32px 0 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png" width="24" height="24" alt="Location" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#555555;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">39040 Neustatt 6, Aldein (BZ), Italy</span></td>
+              <td valign="middle" style="padding:0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png" width="24" height="24" alt="Website" style="display:inline-block;vertical-align:middle;border:0;"><a href="https://cdc.company" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">cdc.company</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td colspan="6" height="1" bgcolor="#e0e0e0" style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;"></td></tr>
+      <tr><td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff;padding:9px 0 14px 0;"><span style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:400;color:#666666;line-height:1.45;display:block;">This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates...</span></td></tr>
+    </table>
+    </div></div>
+  </div>
+</div>
+<div class="an">
+  <b>Visual structure:</b> Logo (104px) · spacer · Identity (259px) · 1px separator · 14px spacer · brand panel (184px): "cdc.company" in 16px orange bold + "CABLEWAY DEVELOPMENT COMPANY" in 9px grey uppercase with letter-spacing.<br>
+  <b>Column math:</b> 104+18+259+1+14+184=580. Right panel text: "cdc.company" ≈ 90px (16px), "Cableway Development Company" ≈ 175px (9px + 0.06em) — both with <code>white-space:nowrap</code>.<br>
+  <b>Visually fills 580px:</b> YES — the orange "cdc.company" on the right makes the header read as a full-width balanced composition. Separator between identity and brand panel reinforces the two-panel structure.<br>
+  <b>Gmail scale-to-fit likelihood:</b> <span class="lo">HIGHEST</span> — real text content in the right 184px cell with <code>white-space:nowrap</code> forces the cell to render at content width. The cell's <code>width="184"</code> attribute combined with nowrap text that approaches 180px forces Gmail to account for the full 580px column sum.<br>
+  <b>Address stays one line:</b> <span class="mo">POSSIBLE</span> — if Gmail applies scale-to-fit due to the wide header, address scales down and stays on one line. If Gmail reflows, address still wraps (contact table is still <code>width="100%"</code> here).<br>
+  <b>Design quality:</b> Strong. "cdc.company" in the upper right is a recognized brand element (domain-as-brand). The faint company name below reads as a tagline/watermark. The separator makes the two-panel structure look deliberate, not empty.<br>
+  <b>Risk:</b> "cdc.company" appears twice (header panel + website in contact grid). Some recipients may notice. The 9px grey line is very small on high-DPI screens. If Gmail strips <code>white-space:nowrap</code>, the anchor fails. Requires device testing.
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ VARIANT E -->
+<div class="v">
+<div class="vt">Variant E — Compact Scaled Fonts</div>
+<div class="vs">All fonts reduced 1–2px · mimics Gmail app proportional scale-to-fit appearance · no hidden elements</div>
+<div class="row">
+  <div class="col">
+    <div class="lbl">Desktop Preview</div>
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC" style="display: block; border: 0; height: auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="259" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <!-- Name: 19px (was 21px) -->
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 19px;
+                    font-weight: 700; color: #1a1a2e; line-height: 1.15; margin: 0 0 5px 0;">
+            Anna Bergmann
+          </p>
+          <!-- Title: 12px (was 13px) -->
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                    font-weight: 400; color: #555555; line-height: 1.3; margin: 0 0 3px 0;">
+            Head of Corporate Operations
+          </p>
+          <!-- Company: 12px (was 13px) -->
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                    font-weight: 600; color: #F16623; line-height: 1.3; margin: 0;">
+            Cableway Development Company
+          </p>
+        </td>
+        <td width="1" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 0; font-size: 0; line-height: 0; vertical-align: middle;">
+          <table width="1" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr><td width="1" height="64" bgcolor="#eeeeee"
+                    style="background-color: #eeeeee; font-size: 0; line-height: 0; width: 1px; height: 64px;"></td></tr>
+          </table>
+        </td>
+        <td width="14" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="184" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 0; font-size: 0; line-height: 0;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr>
+              <td valign="middle" style="padding: 0 32px 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                     width="22" height="22" alt="Phone"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="tel:+390471886501"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >+39&nbsp;0471&nbsp;886&nbsp;501</a>
+              </td>
+              <td valign="middle" style="padding: 0 0 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                     width="22" height="22" alt="Email"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="mailto:a.bergmann@cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >a.bergmann@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding: 0 32px 0 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                     width="22" height="22" alt="Location"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><span
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                         font-weight: 400; color: #555555; vertical-align: middle;
+                         margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td valign="middle" style="padding: 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                     width="22" height="22" alt="Website"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="https://cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 9px 0 14px 0;">
+          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 10px;
+                       font-weight: 400; color: #666666; line-height: 1.45; display: block;">
+            This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates and is intended solely for the use of the individual or entity to whom it is addressed. If you have received this email in error, please notify the sender immediately.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col">
+    <div class="lbl">iPhone Scale Preview (64.1%)</div>
+    <div class="iphone"><div class="iscr">
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff" style="background-color:#ffffff;padding:14px 0;vertical-align:middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png" width="104" alt="CDC" style="display:block;border:0;height:auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <td width="259" valign="middle" bgcolor="#ffffff" style="background-color:#ffffff;padding:14px 0;vertical-align:middle;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:19px;font-weight:700;color:#1a1a2e;line-height:1.15;margin:0 0 5px 0;">Anna Bergmann</p>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:400;color:#555555;line-height:1.3;margin:0 0 3px 0;">Head of Corporate Operations</p>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:600;color:#F16623;line-height:1.3;margin:0;">Cableway Development Company</p>
+        </td>
+        <td width="1" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="14" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <td width="184" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+      </tr>
+      <tr><td colspan="6" height="1" bgcolor="#e0e0e0" style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;"></td></tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff;padding:10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+            <tr>
+              <td valign="middle" style="padding:0 32px 8px 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png" width="22" height="22" alt="Phone" style="display:inline-block;vertical-align:middle;border:0;"><a href="tel:+390471886501" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">+39&nbsp;0471&nbsp;886&nbsp;501</a></td>
+              <td valign="middle" style="padding:0 0 8px 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png" width="22" height="22" alt="Email" style="display:inline-block;vertical-align:middle;border:0;"><a href="mailto:a.bergmann@cdc.company" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">a.bergmann@cdc.company</a></td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding:0 32px 0 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png" width="22" height="22" alt="Location" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:400;color:#555555;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">39040 Neustatt 6, Aldein (BZ), Italy</span></td>
+              <td valign="middle" style="padding:0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png" width="22" height="22" alt="Website" style="display:inline-block;vertical-align:middle;border:0;"><a href="https://cdc.company" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">cdc.company</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td colspan="6" height="1" bgcolor="#e0e0e0" style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;"></td></tr>
+      <tr><td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff;padding:9px 0 14px 0;"><span style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:400;color:#666666;line-height:1.45;display:block;">This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates...</span></td></tr>
+    </table>
+    </div></div>
+  </div>
+</div>
+<div class="an">
+  <b>Visual structure:</b> Identical to Variant A (baseline header with empty right cell). All text fonts reduced: name 21→19px, title/company 13→12px, contact icons 24→22px, contact text 13→12px. Disclaimer unchanged at 10px.<br>
+  <b>Column math:</b> Same as A. Contact table <code>width="100%"</code>.<br>
+  <b>Visually fills 580px:</b> No — same structural issue as A. Right side empty.<br>
+  <b>Gmail scale-to-fit likelihood:</b> <span class="hi">LOW</span> — does not add any width anchoring. Same Gmail behavior expected.<br>
+  <b>Address stays one line:</b> <span class="mo">MARGINALLY BETTER</span> — address text at 12px is ≈8% narrower than 13px. "39040 Neustatt 6, Aldein (BZ), Italy" ≈ 261px at 12px (vs 283px at 13px). Still may wrap if Gmail reflows at narrow width. The real gain is on desktop where auto columns may be slightly more generous.<br>
+  <b>Design quality:</b> Noticeably smaller feel. The signature looks compact — appropriate for some organizations, may feel less premium for CDC.<br>
+  <b>Risk:</b> Font reduction is a visual compromise, not a structural fix. If Gmail reflows at 375px, contact columns remain auto-distributed — address still likely wraps at 12px too. This is a workaround, not a solution.
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ VARIANT F -->
+<div class="v">
+<div class="vt">Variant F — Fixed Wide Contact Columns</div>
+<div class="vs">Contact table fixed 580px · left 390 / right 190 · address content area 358px · maximum address margin</div>
+<div class="row">
+  <div class="col">
+    <div class="lbl">Desktop Preview</div>
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC" style="display: block; border: 0; height: auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="259" valign="middle" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 14px 0; vertical-align: middle;">
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 21px;
+                    font-weight: 700; color: #1a1a2e; line-height: 1.15; margin: 0 0 5px 0;">
+            Anna Bergmann
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 400; color: #555555; line-height: 1.3; margin: 0 0 3px 0;">
+            Head of Corporate Operations
+          </p>
+          <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                    font-weight: 600; color: #F16623; line-height: 1.3; margin: 0;">
+            Cableway Development Company
+          </p>
+        </td>
+        <td width="1" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 0; font-size: 0; line-height: 0;"></td>
+        <td width="14" bgcolor="#ffffff" style="background-color: #ffffff;"></td>
+        <td width="184" bgcolor="#ffffff"
+            style="background-color: #ffffff; padding: 0; font-size: 0; line-height: 0;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 10px 0;">
+          <!-- Fixed asymmetric contact table: 390 + 190 = 580px -->
+          <table width="580" cellpadding="0" cellspacing="0" border="0"
+                 style="border-collapse: collapse; table-layout: fixed;">
+            <tr>
+              <td width="390" style="padding: 0; font-size: 0; line-height: 0;"></td>
+              <td width="190" style="padding: 0; font-size: 0; line-height: 0;"></td>
+            </tr>
+            <tr>
+              <td width="390" valign="middle"
+                  style="padding: 0 32px 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                     width="24" height="24" alt="Phone"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="tel:+390471886501"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >+39&nbsp;0471&nbsp;886&nbsp;501</a>
+              </td>
+              <td width="190" valign="middle"
+                  style="padding: 0 0 8px 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                     width="24" height="24" alt="Email"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="mailto:a.bergmann@cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >a.bergmann@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td width="390" valign="middle"
+                  style="padding: 0 32px 0 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                     width="24" height="24" alt="Location"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><span
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #555555; vertical-align: middle;
+                         margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td width="190" valign="middle"
+                  style="padding: 0; vertical-align: middle; white-space: nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                     width="24" height="24" alt="Website"
+                     style="display: inline-block; vertical-align: middle; border: 0;"><a
+                  href="https://cdc.company"
+                  style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                         font-weight: 400; color: #333333; text-decoration: none;
+                         vertical-align: middle; margin-left: 6px; display: inline-block; white-space: nowrap;"
+                >cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height: 1px; background-color: #e0e0e0; font-size: 1px; line-height: 1px;"></td>
+      </tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color: #ffffff; padding: 9px 0 14px 0;">
+          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 10px;
+                       font-weight: 400; color: #666666; line-height: 1.45; display: block;">
+            This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates and is intended solely for the use of the individual or entity to whom it is addressed. If you have received this email in error, please notify the sender immediately.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col">
+    <div class="lbl">iPhone Scale Preview (64.1%)</div>
+    <div class="iphone"><div class="iscr">
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse: collapse; table-layout: fixed; background-color: #ffffff;">
+      <tr>
+        <td width="104" valign="middle" bgcolor="#ffffff" style="background-color:#ffffff;padding:14px 0;vertical-align:middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png" width="104" alt="CDC" style="display:block;border:0;height:auto;">
+        </td>
+        <td width="18" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <td width="259" valign="middle" bgcolor="#ffffff" style="background-color:#ffffff;padding:14px 0;vertical-align:middle;">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:21px;font-weight:700;color:#1a1a2e;line-height:1.15;margin:0 0 5px 0;">Anna Bergmann</p>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#555555;line-height:1.3;margin:0 0 3px 0;">Head of Corporate Operations</p>
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:600;color:#F16623;line-height:1.3;margin:0;">Cableway Development Company</p>
+        </td>
+        <td width="1" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+        <td width="14" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <td width="184" bgcolor="#ffffff" style="background-color:#ffffff;padding:0;font-size:0;line-height:0;"></td>
+      </tr>
+      <tr><td colspan="6" height="1" bgcolor="#e0e0e0" style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;"></td></tr>
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff;padding:10px 0;">
+          <table width="580" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;table-layout:fixed;">
+            <tr>
+              <td width="390" style="padding:0;font-size:0;line-height:0;"></td>
+              <td width="190" style="padding:0;font-size:0;line-height:0;"></td>
+            </tr>
+            <tr>
+              <td width="390" valign="middle" style="padding:0 32px 8px 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png" width="24" height="24" alt="Phone" style="display:inline-block;vertical-align:middle;border:0;"><a href="tel:+390471886501" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">+39&nbsp;0471&nbsp;886&nbsp;501</a></td>
+              <td width="190" valign="middle" style="padding:0 0 8px 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png" width="24" height="24" alt="Email" style="display:inline-block;vertical-align:middle;border:0;"><a href="mailto:a.bergmann@cdc.company" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">a.bergmann@cdc.company</a></td>
+            </tr>
+            <tr>
+              <td width="390" valign="middle" style="padding:0 32px 0 0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png" width="24" height="24" alt="Location" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#555555;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">39040 Neustatt 6, Aldein (BZ), Italy</span></td>
+              <td width="190" valign="middle" style="padding:0;vertical-align:middle;white-space:nowrap;"><img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png" width="24" height="24" alt="Website" style="display:inline-block;vertical-align:middle;border:0;"><a href="https://cdc.company" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;color:#333333;text-decoration:none;vertical-align:middle;margin-left:6px;display:inline-block;white-space:nowrap;">cdc.company</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td colspan="6" height="1" bgcolor="#e0e0e0" style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;"></td></tr>
+      <tr><td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff;padding:9px 0 14px 0;"><span style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:400;color:#666666;line-height:1.45;display:block;">This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates...</span></td></tr>
+    </table>
+    </div></div>
+  </div>
+</div>
+<div class="an">
+  <b>Visual structure:</b> Baseline header (same as A — logo + identity + empty right). Fixed 2×2 contact table: left col 390px, right col 190px, total 580px with <code>table-layout:fixed</code> and ghost anchor row.<br>
+  <b>Column math:</b> Header 104+18+259+1+14+184=580. Contact: 390+190=580. Address content area: 390−32px padding = <b>358px</b>. Address text (Title Case 13px) ≈ 283px. Margin: <span class="lo">+75px — VERY COMFORTABLE</span>.<br>
+  <b>Visually fills 580px:</b> Partially — header same as A. But the inner fixed contact table forces outer table to honor 580px as minimum width (inner table can't fit in less).<br>
+  <b>Gmail scale-to-fit likelihood:</b> <span class="mo">MODERATE</span> — a fixed inner table <code>width="580"</code> wider than the viewport creates layout pressure that may force outer table to expand, potentially triggering scale-to-fit. This was the logic of the failed ed403c9 approach, but at 350+230. At 390+190, the wider left column gives the address significantly more room even without scaling.<br>
+  <b>Address stays one line:</b> <span class="lo">HIGH LIKELIHOOD</span> — even in content-reflow mode at 375px, if Gmail renders the inner table at 580px (because it's wider than viewport), address has 358px content area. At 283px needed, this is a 75px safety margin even before considering that Title Case is 15% narrower than ALL CAPS.<br>
+  <b>Design quality:</b> Good. Contact block is visually balanced — phone/address on wide left, email/website on compact right. No visible design changes from baseline.<br>
+  <b>Risk:</b> Header still has empty right side — doesn't solve the root cause. If Gmail ignores the inner table width for outer table sizing, reflow still occurs but address fits anyway. If Gmail does scale, address fits trivially. Both scenarios result in address on one line. The asymmetry (390 vs 190) means email addresses are tighter on the right — acceptable for shorter addresses like a.bergmann@cdc.company.
+</div>
+</div>
+
+</body>
+</html>

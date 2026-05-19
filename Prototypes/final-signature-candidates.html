@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CDC Signature — Final Candidates Only</title>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #e6e6e6;
+    margin: 0;
+    padding: 48px 36px 80px;
+    color: #1a1a2e;
+  }
+
+  /* ── Page header ─────────────────────────────── */
+  .page-title {
+    font-size: 22px; font-weight: 700;
+    margin: 0 0 6px;
+    color: #1a1a2e;
+  }
+  .page-meta {
+    font-size: 12px; color: #888;
+    margin: 0 0 4px; line-height: 1.7;
+  }
+  .decision-box {
+    max-width: 660px;
+    background: #fff8f4;
+    border-left: 4px solid #F16623;
+    padding: 16px 20px;
+    margin: 24px 0 56px;
+    font-size: 12px;
+    line-height: 1.85;
+    color: #333;
+  }
+  .decision-box strong { color: #1a1a2e; }
+  .decision-box .rec { color: #F16623; font-weight: 700; }
+
+  /* ── Candidate blocks ────────────────────────── */
+  .candidate-block { margin-bottom: 80px; max-width: 720px; }
+
+  .candidate-head { margin-bottom: 18px; }
+  .badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: #fff; background: #1a1a2e;
+    padding: 3px 10px; border-radius: 2px;
+    margin-right: 10px; vertical-align: middle;
+  }
+  .badge.ref  { background: #888; }
+  .badge.warn { background: #4a6fa5; }
+  .badge.rec  { background: #F16623; }
+
+  .candidate-title {
+    font-size: 17px; font-weight: 700;
+    vertical-align: middle; color: #1a1a2e;
+  }
+  .candidate-subtitle {
+    font-size: 12px; color: #666;
+    margin: 6px 0 0; line-height: 1.6;
+  }
+
+  /* ── Preview wrapper ─────────────────────────── */
+  .sig-wrap {
+    background: #fff;
+    padding: 24px;
+    display: inline-block;
+    border: 1px solid #c8c8c8;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  /* ── Bullet notes ────────────────────────────── */
+  .notes {
+    max-width: 660px;
+    background: #fafafa;
+    border-left: 3px solid #F16623;
+    padding: 14px 20px;
+    font-size: 12px;
+    line-height: 1.9;
+    color: #444;
+    margin-bottom: 24px;
+  }
+  .notes ul { margin: 4px 0 0; padding-left: 18px; }
+  .notes li { margin-bottom: 3px; }
+  .notes .pro  { color: #2c7a2c; }
+  .notes .warn { color: #b03030; }
+  .notes .neut { color: #555; }
+
+  /* ── Section divider ─────────────────────────── */
+  hr.section {
+    border: none; border-top: 2px solid #d0d0d0;
+    margin: 72px 0;
+    max-width: 720px;
+  }
+
+  /* ── iPhone shell ────────────────────────────── */
+  .iphone-section { margin-top: 8px; margin-bottom: 0; }
+  .iphone-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    color: #999; margin-bottom: 12px;
+  }
+  .iphone-shell {
+    display: inline-block;
+    border: 9px solid #1a1a2e;
+    border-radius: 44px;
+    overflow: hidden;
+    background: #1a1a2e;
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  }
+  .iphone-notch {
+    background: #1a1a2e;
+    height: 26px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .iphone-notch-pill {
+    width: 80px; height: 13px;
+    background: #111; border-radius: 7px;
+  }
+  .iphone-screen {
+    width: 390px;
+    background: #f2f2f7;
+    overflow: hidden;
+  }
+  .gmail-subject-bar {
+    background: #fff;
+    padding: 12px 16px;
+    font-size: 15px; font-weight: 700;
+    color: #1a1a2e;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .gmail-meta-bar {
+    background: #fff;
+    padding: 8px 16px 12px;
+    font-size: 12px; color: #888;
+    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 12px;
+  }
+  .gmail-body {
+    background: #fff;
+    padding: 16px;
+    overflow: hidden;
+  }
+  .scale-to-iphone {
+    transform: scale(0.672);
+    transform-origin: top left;
+    display: inline-block;
+  }
+  .iphone-sig-clip {
+    width: 390px; overflow: hidden; height: 215px;
+  }
+
+  /* ── Comparison table ────────────────────────── */
+  .comparison-wrap {
+    max-width: 720px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 24px 28px;
+    border-radius: 2px;
+    margin-bottom: 48px;
+  }
+  .comparison-wrap h2 {
+    font-size: 14px; font-weight: 700;
+    margin: 0 0 18px; color: #1a1a2e;
+  }
+
+  /* ── Final recommendation box ────────────────── */
+  .final-rec {
+    max-width: 720px;
+    background: #fff8f4;
+    border: 2px solid #F16623;
+    padding: 24px 28px;
+    border-radius: 2px;
+    margin-bottom: 48px;
+  }
+  .final-rec h2 {
+    font-size: 14px; font-weight: 700;
+    color: #F16623; margin: 0 0 12px;
+  }
+  .final-rec p {
+    font-size: 12px; color: #444;
+    line-height: 1.8; margin: 0 0 10px;
+  }
+  .final-rec p:last-child { margin: 0; }
+
+  /* ── Footer ──────────────────────────────────── */
+  .page-footer {
+    font-size: 11px; color: #aaa;
+    margin: 48px 0 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ PAGE HEADER -->
+<h1 class="page-title">CDC Signature — Final Candidates Only</h1>
+<p class="page-meta">
+  Prototype &middot; Prototypes/final-signature-candidates.html &middot; 2026-05-19<br>
+  For detailed variant history see: Prototypes/company-wordmark-header-preview.html
+</p>
+
+<div class="decision-box">
+  <strong>Decision summary</strong><br>
+  Three candidates are shown: the original with-award baseline for visual reference, and the two final no-award candidates.<br><br>
+  <span class="rec">FINAL-C is the recommended candidate</span> for live production testing.
+  It preserves the proven 580 px six-column header structure, replaces the award banner with a transparent CDC wordmark image as a right-side anchor, and adds two layers of contact-table structural defence (table-layout:fixed + explicit 50% column widths).<br><br>
+  <strong>FINAL-B</strong> is visually cleaner — the three-tier identity (name / title / orange company line) reads elegantly — but it has no right-side image anchor. Without that anchor Gmail iOS may not scale the full 580 px table proportionally, which puts the 2×2 contact grid at risk of reflow. Do not deploy FINAL-B without an iPhone send/receive validation.<br><br>
+  <strong>Reference</strong> is included only as the known-good visual and structural benchmark. It cannot be used in production while the award/banner is unavailable.
+</div>
+
+
+<!-- ═══════════════════════════════════════ REFERENCE -->
+<div class="candidate-block">
+  <div class="candidate-head">
+    <span class="badge ref">Reference</span>
+    <span class="candidate-title">Original — With Award/Banner</span>
+  </div>
+  <p class="candidate-subtitle">
+    104 + 18 + 259 + 1 + 14 + 184 = 580 px &nbsp;·&nbsp;
+    Known-good production layout. Right cell: award/banner image. For comparison only.
+  </p>
+
+  <div class="sig-wrap">
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse:collapse; table-layout:fixed; background-color:#ffffff;">
+      <tr>
+        <!-- Badge — 104 px -->
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:14px 0; vertical-align:middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC"
+               style="display:block; border:0; height:auto;">
+        </td>
+        <!-- Spacer — 18 px -->
+        <td width="18" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <!-- Identity — 259 px: name + title + company line -->
+        <td width="259" valign="middle" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:14px 0; vertical-align:middle;">
+          <p style="font-family:Arial,Helvetica,sans-serif; font-size:17px;
+                    font-weight:700; color:#1a1a2e; line-height:1.15; margin:0 0 5px 0;">
+            Alexandra Johnson
+          </p>
+          <p style="font-family:Arial,Helvetica,sans-serif; font-size:14px;
+                    font-weight:400; color:#555555; line-height:1.3; margin:0 0 3px 0;">
+            Head of Sustainable Development
+          </p>
+          <p style="font-family:Arial,Helvetica,sans-serif; font-size:13px;
+                    font-weight:600; color:#F16623; line-height:1.3; margin:0;">
+            Cableway Development Company
+          </p>
+        </td>
+        <!-- Separator — 1 px × 64 px -->
+        <td width="1" valign="middle" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:0; font-size:0; line-height:0; vertical-align:middle;">
+          <table width="1" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+            <tr><td width="1" height="64" bgcolor="#eeeeee"
+                    style="background-color:#eeeeee; font-size:0; line-height:0; width:1px; height:64px;"></td></tr>
+          </table>
+        </td>
+        <!-- Spacer — 14 px -->
+        <td width="14" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <!-- Award banner — 184 px -->
+        <td width="184" valign="middle" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:14px 0; vertical-align:middle;">
+          <img src="https://static.tildacdn.com/tild3065-3964-4339-b466-326436663935/award-banner.png"
+               width="184" alt="Financial Times · 1000 Europe's Fastest Growing Companies 2025 · Ranked 3rd in Europe"
+               style="display:block; border:0; height:auto; max-width:184px;">
+        </td>
+      </tr>
+      <!-- Divider -->
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height:1px; background-color:#e0e0e0; font-size:1px; line-height:1px;"></td>
+      </tr>
+      <!-- Contact 2×2 -->
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff; padding:10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+            <tr>
+              <td valign="middle" style="padding:0 32px 8px 0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                     width="24" height="24" alt="Phone"
+                     style="display:inline-block; vertical-align:middle; border:0;"><a
+                  href="tel:+39047188710"
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#333333; text-decoration:none; vertical-align:middle;
+                         margin-left:6px; display:inline-block; white-space:nowrap;"
+                >+39 0471 887 100</a>
+              </td>
+              <td valign="middle" style="padding:0 0 8px 0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                     width="24" height="24" alt="Email"
+                     style="display:inline-block; vertical-align:middle; border:0;"><a
+                  href="mailto:a.johnson@cdc.company"
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#333333; text-decoration:none; vertical-align:middle;
+                         margin-left:6px; display:inline-block; white-space:nowrap;"
+                >a.johnson@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding:0 32px 0 0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                     width="24" height="24" alt="Location"
+                     style="display:inline-block; vertical-align:middle; border:0;"><span
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#555555; vertical-align:middle; margin-left:6px;
+                         display:inline-block; white-space:nowrap;"
+                >39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td valign="middle" style="padding:0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                     width="24" height="24" alt="Website"
+                     style="display:inline-block; vertical-align:middle; border:0;"><a
+                  href="https://cdc.company"
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#333333; text-decoration:none; vertical-align:middle;
+                         margin-left:6px; display:inline-block; white-space:nowrap;"
+                >cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <!-- Divider -->
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height:1px; background-color:#e0e0e0; font-size:1px; line-height:1px;"></td>
+      </tr>
+      <!-- Disclaimer -->
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff; padding:9px 0 14px 0;">
+          <span style="font-family:Arial,Helvetica,sans-serif; font-size:10px; font-weight:400;
+                       color:#666666; line-height:1.45; display:block;">
+            This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates and is intended solely for the use of the individual or entity to whom it is addressed. If you have received this email in error, please return it to the sender and permanently delete it from your system.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- iPhone — Reference -->
+  <div class="iphone-section">
+    <div class="iphone-label">Reference — Gmail iOS simulated (390 px, 0.672× scale)</div>
+    <div class="iphone-shell">
+      <div class="iphone-notch"><div class="iphone-notch-pill"></div></div>
+      <div class="iphone-screen">
+        <div class="gmail-subject-bar">Q3 Sustainability Review</div>
+        <div class="gmail-meta-bar">Alexandra Johnson &lt;a.johnson@cdc.company&gt;</div>
+        <div class="gmail-body">
+          <div class="iphone-sig-clip">
+            <div class="scale-to-iphone">
+              <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+                   style="border-collapse:collapse; table-layout:fixed; background-color:#ffffff;">
+                <tr>
+                  <td width="104" valign="middle" bgcolor="#ffffff"
+                      style="background-color:#ffffff; padding:14px 0; vertical-align:middle;">
+                    <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+                         width="104" alt="CDC" style="display:block; border:0; height:auto;">
+                  </td>
+                  <td width="18" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+                  <td width="259" valign="middle" bgcolor="#ffffff"
+                      style="background-color:#ffffff; padding:14px 0; vertical-align:middle;">
+                    <p style="font-family:Arial,Helvetica,sans-serif; font-size:17px;
+                              font-weight:700; color:#1a1a2e; line-height:1.15; margin:0 0 5px 0;">
+                      Alexandra Johnson
+                    </p>
+                    <p style="font-family:Arial,Helvetica,sans-serif; font-size:14px;
+                              font-weight:400; color:#555555; line-height:1.3; margin:0 0 3px 0;">
+                      Head of Sustainable Development
+                    </p>
+                    <p style="font-family:Arial,Helvetica,sans-serif; font-size:13px;
+                              font-weight:600; color:#F16623; line-height:1.3; margin:0;">
+                      Cableway Development Company
+                    </p>
+                  </td>
+                  <td width="1" valign="middle" bgcolor="#ffffff"
+                      style="background-color:#ffffff; padding:0; font-size:0; line-height:0; vertical-align:middle;">
+                    <table width="1" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                      <tr><td width="1" height="64" bgcolor="#eeeeee"
+                              style="background-color:#eeeeee; font-size:0; line-height:0; width:1px; height:64px;"></td></tr>
+                    </table>
+                  </td>
+                  <td width="14" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+                  <td width="184" valign="middle" bgcolor="#ffffff"
+                      style="background-color:#ffffff; padding:14px 0; vertical-align:middle;">
+                    <img src="https://static.tildacdn.com/tild3065-3964-4339-b466-326436663935/award-banner.png"
+                         width="184" alt="Award banner"
+                         style="display:block; border:0; height:auto; max-width:184px;">
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6" height="1" bgcolor="#e0e0e0"
+                      style="height:1px; background-color:#e0e0e0; font-size:1px; line-height:1px;"></td>
+                </tr>
+                <tr>
+                  <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff; padding:10px 0;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                      <tr>
+                        <td valign="middle" style="padding:0 32px 8px 0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                               width="24" height="24" alt="Phone"
+                               style="display:inline-block; vertical-align:middle; border:0;"><a
+                            href="tel:+39047188710"
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#333333; text-decoration:none; vertical-align:middle;
+                                   margin-left:6px; display:inline-block; white-space:nowrap;"
+                          >+39 0471 887 100</a>
+                        </td>
+                        <td valign="middle" style="padding:0 0 8px 0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                               width="24" height="24" alt="Email"
+                               style="display:inline-block; vertical-align:middle; border:0;"><a
+                            href="mailto:a.johnson@cdc.company"
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#333333; text-decoration:none; vertical-align:middle;
+                                   margin-left:6px; display:inline-block; white-space:nowrap;"
+                          >a.johnson@cdc.company</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="middle" style="padding:0 32px 0 0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                               width="24" height="24" alt="Location"
+                               style="display:inline-block; vertical-align:middle; border:0;"><span
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#555555; vertical-align:middle; margin-left:6px;
+                                   display:inline-block; white-space:nowrap;"
+                          >39040 Neustatt 6, Aldein (BZ), Italy</span>
+                        </td>
+                        <td valign="middle" style="padding:0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                               width="24" height="24" alt="Website"
+                               style="display:inline-block; vertical-align:middle; border:0;"><a
+                            href="https://cdc.company"
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#333333; text-decoration:none; vertical-align:middle;
+                                   margin-left:6px; display:inline-block; white-space:nowrap;"
+                          >cdc.company</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes" style="margin-top:20px;">
+    <ul>
+      <li><span class="pro"><strong>Visual quality:</strong></span> The established, proven layout. All three identity tiers (name / title / company) are present. Award banner fills the right cell and anchors the header.</li>
+      <li><span class="warn"><strong>Status:</strong></span> Cannot be used in production while the FT award/banner is unavailable.</li>
+      <li><span class="neut"><strong>Contact table:</strong></span> Standard <code>width="100%"</code>, no fixed column widths. Works correctly because the right-side image anchor stabilises the full 580 px table width.</li>
+      <li><span class="neut"><strong>Gmail iPhone:</strong></span> Known-good. Right-side image provides content pressure; Gmail iOS scales the table to ~0.672× viewport width reliably.</li>
+      <li><span class="neut"><strong>Purpose here:</strong></span> Visual and structural benchmark only. Use this to compare proportions, header height, and contact block spacing against the two no-award candidates.</li>
+    </ul>
+  </div>
+</div>
+
+<hr class="section">
+
+
+<!-- ═══════════════════════════════════════ FINAL-B -->
+<div class="candidate-block">
+  <div class="candidate-head">
+    <span class="badge warn">FINAL-B</span>
+    <span class="candidate-title">Clean Visual Candidate — Higher Gmail iPhone Risk</span>
+  </div>
+  <p class="candidate-subtitle">
+    104 + 18 + 458 (colspan=4) = 580 px &nbsp;·&nbsp;
+    Badge left. Name / title / orange company line in identity block. No right-side image. No award/banner.
+  </p>
+
+  <div class="sig-wrap">
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse:collapse; table-layout:fixed; background-color:#ffffff;">
+      <tr>
+        <!-- Badge — 104 px -->
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:14px 0; vertical-align:middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC"
+               style="display:block; border:0; height:auto;">
+        </td>
+        <!-- Spacer — 18 px -->
+        <td width="18" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <!-- Identity — 458 px (colspan 4): name + title + company accent -->
+        <td width="458" colspan="4" valign="middle" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:14px 0; vertical-align:middle;">
+          <p style="font-family:Arial,Helvetica,sans-serif; font-size:17px;
+                    font-weight:700; color:#1a1a2e; line-height:1.15; margin:0 0 4px 0;">
+            Alexandra Johnson
+          </p>
+          <p style="font-family:Arial,Helvetica,sans-serif; font-size:14px;
+                    font-weight:400; color:#555555; line-height:1.3; margin:0 0 4px 0;">
+            Head of Sustainable Development
+          </p>
+          <p style="font-family:Arial,Helvetica,sans-serif; font-size:13px;
+                    font-weight:600; color:#F16623; line-height:1.3; margin:0;">
+            Cableway Development Company
+          </p>
+        </td>
+      </tr>
+      <!-- Divider -->
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height:1px; background-color:#e0e0e0; font-size:1px; line-height:1px;"></td>
+      </tr>
+      <!-- Contact 2×2 -->
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff; padding:10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+            <tr>
+              <td valign="middle" style="padding:0 32px 8px 0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                     width="24" height="24" alt="Phone"
+                     style="display:inline-block; vertical-align:middle; border:0;"><a
+                  href="tel:+39047188710"
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#333333; text-decoration:none; vertical-align:middle;
+                         margin-left:6px; display:inline-block; white-space:nowrap;"
+                >+39 0471 887 100</a>
+              </td>
+              <td valign="middle" style="padding:0 0 8px 0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                     width="24" height="24" alt="Email"
+                     style="display:inline-block; vertical-align:middle; border:0;"><a
+                  href="mailto:a.johnson@cdc.company"
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#333333; text-decoration:none; vertical-align:middle;
+                         margin-left:6px; display:inline-block; white-space:nowrap;"
+                >a.johnson@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td valign="middle" style="padding:0 32px 0 0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                     width="24" height="24" alt="Location"
+                     style="display:inline-block; vertical-align:middle; border:0;"><span
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#555555; vertical-align:middle; margin-left:6px;
+                         display:inline-block; white-space:nowrap;"
+                >39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td valign="middle" style="padding:0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                     width="24" height="24" alt="Website"
+                     style="display:inline-block; vertical-align:middle; border:0;"><a
+                  href="https://cdc.company"
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#333333; text-decoration:none; vertical-align:middle;
+                         margin-left:6px; display:inline-block; white-space:nowrap;"
+                >cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <!-- Divider -->
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height:1px; background-color:#e0e0e0; font-size:1px; line-height:1px;"></td>
+      </tr>
+      <!-- Disclaimer -->
+      <tr>
+        <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff; padding:9px 0 14px 0;">
+          <span style="font-family:Arial,Helvetica,sans-serif; font-size:10px; font-weight:400;
+                       color:#666666; line-height:1.45; display:block;">
+            This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates and is intended solely for the use of the individual or entity to whom it is addressed. If you have received this email in error, please return it to the sender and permanently delete it from your system.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- iPhone — FINAL-B -->
+  <div class="iphone-section">
+    <div class="iphone-label">FINAL-B — Gmail iOS simulated (390 px, 0.672× scale)</div>
+    <div class="iphone-shell">
+      <div class="iphone-notch"><div class="iphone-notch-pill"></div></div>
+      <div class="iphone-screen">
+        <div class="gmail-subject-bar">Q3 Sustainability Review</div>
+        <div class="gmail-meta-bar">Alexandra Johnson &lt;a.johnson@cdc.company&gt;</div>
+        <div class="gmail-body">
+          <div class="iphone-sig-clip">
+            <div class="scale-to-iphone">
+              <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+                   style="border-collapse:collapse; table-layout:fixed; background-color:#ffffff;">
+                <tr>
+                  <td width="104" valign="middle" bgcolor="#ffffff"
+                      style="background-color:#ffffff; padding:14px 0; vertical-align:middle;">
+                    <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+                         width="104" alt="CDC" style="display:block; border:0; height:auto;">
+                  </td>
+                  <td width="18" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+                  <td width="458" colspan="4" valign="middle" bgcolor="#ffffff"
+                      style="background-color:#ffffff; padding:14px 0; vertical-align:middle;">
+                    <p style="font-family:Arial,Helvetica,sans-serif; font-size:17px;
+                              font-weight:700; color:#1a1a2e; line-height:1.15; margin:0 0 4px 0;">
+                      Alexandra Johnson
+                    </p>
+                    <p style="font-family:Arial,Helvetica,sans-serif; font-size:14px;
+                              font-weight:400; color:#555555; line-height:1.3; margin:0 0 4px 0;">
+                      Head of Sustainable Development
+                    </p>
+                    <p style="font-family:Arial,Helvetica,sans-serif; font-size:13px;
+                              font-weight:600; color:#F16623; line-height:1.3; margin:0;">
+                      Cableway Development Company
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6" height="1" bgcolor="#e0e0e0"
+                      style="height:1px; background-color:#e0e0e0; font-size:1px; line-height:1px;"></td>
+                </tr>
+                <tr>
+                  <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff; padding:10px 0;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                      <tr>
+                        <td valign="middle" style="padding:0 32px 8px 0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                               width="24" height="24" alt="Phone"
+                               style="display:inline-block; vertical-align:middle; border:0;"><a
+                            href="tel:+39047188710"
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#333333; text-decoration:none; vertical-align:middle;
+                                   margin-left:6px; display:inline-block; white-space:nowrap;"
+                          >+39 0471 887 100</a>
+                        </td>
+                        <td valign="middle" style="padding:0 0 8px 0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                               width="24" height="24" alt="Email"
+                               style="display:inline-block; vertical-align:middle; border:0;"><a
+                            href="mailto:a.johnson@cdc.company"
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#333333; text-decoration:none; vertical-align:middle;
+                                   margin-left:6px; display:inline-block; white-space:nowrap;"
+                          >a.johnson@cdc.company</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="middle" style="padding:0 32px 0 0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                               width="24" height="24" alt="Location"
+                               style="display:inline-block; vertical-align:middle; border:0;"><span
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#555555; vertical-align:middle; margin-left:6px;
+                                   display:inline-block; white-space:nowrap;"
+                          >39040 Neustatt 6, Aldein (BZ), Italy</span>
+                        </td>
+                        <td valign="middle" style="padding:0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                               width="24" height="24" alt="Website"
+                               style="display:inline-block; vertical-align:middle; border:0;"><a
+                            href="https://cdc.company"
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#333333; text-decoration:none; vertical-align:middle;
+                                   margin-left:6px; display:inline-block; white-space:nowrap;"
+                          >cdc.company</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes" style="margin-top:20px;">
+    <ul>
+      <li><span class="pro"><strong>Visual quality:</strong></span> Elegant and clean. The three-tier identity (name → title → orange company line) has a natural reading rhythm and a premium feel. Of all no-award candidates this looks the most "finished" on a desktop screen.</li>
+      <li><span class="warn"><strong>Gmail iPhone risk — HIGH:</strong></span> No right-side image column. Without a content-pressure anchor in the rightmost cell, Gmail iOS may calculate the table width as less than 580 px and render the contact grid in auto-layout mode, causing it to reflow or stack.</li>
+      <li><span class="neut"><strong>Contact table:</strong></span> Standard <code>width="100%"</code> with no explicit column widths. This is acceptable only if the outer table is correctly treated as 580 px wide by the email client.</li>
+      <li><span class="neut"><strong>Why this candidate exists:</strong></span> If iPhone live testing confirms that the badge image alone provides sufficient 580 px content pressure, FINAL-B becomes the strongest design choice. It should be tested in parallel with FINAL-C.</li>
+      <li><span class="warn"><strong>Do not deploy</strong> without a real send/receive test on iPhone with Gmail app.</span></li>
+    </ul>
+  </div>
+</div>
+
+<hr class="section">
+
+
+<!-- ═══════════════════════════════════════ FINAL-C -->
+<div class="candidate-block">
+  <div class="candidate-head">
+    <span class="badge rec">FINAL-C ★</span>
+    <span class="candidate-title">Recommended Production-Safe Candidate</span>
+  </div>
+  <p class="candidate-subtitle">
+    104 + 18 + 259 + 1 + 14 + 184 = 580 px &nbsp;·&nbsp;
+    Proven with-banner column structure. Badge left, name+title centre, CDC wordmark image right as anchor. Contact table-layout:fixed + 50% columns.
+  </p>
+
+  <div class="sig-wrap">
+    <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+         style="border-collapse:collapse; table-layout:fixed; background-color:#ffffff;">
+      <tr>
+        <!-- Badge — 104 px -->
+        <td width="104" valign="middle" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:16px 0; vertical-align:middle;">
+          <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+               width="104" alt="CDC"
+               style="display:block; border:0; height:auto;">
+        </td>
+        <!-- Spacer — 18 px -->
+        <td width="18" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <!-- Identity — 259 px: name + title only, no company text line -->
+        <td width="259" valign="middle" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:16px 0; vertical-align:middle;">
+          <p style="font-family:Arial,Helvetica,sans-serif; font-size:17px;
+                    font-weight:700; color:#1a1a2e; line-height:1.15; margin:0 0 5px 0;">
+            Alexandra Johnson
+          </p>
+          <p style="font-family:Arial,Helvetica,sans-serif; font-size:14px;
+                    font-weight:400; color:#555555; line-height:1.3; margin:0;">
+            Head of Sustainable Development
+          </p>
+        </td>
+        <!-- Separator — 1 px × 56 px -->
+        <td width="1" valign="middle" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:0; font-size:0; line-height:0; vertical-align:middle;">
+          <table width="1" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+            <tr><td width="1" height="56" bgcolor="#e0e0e0"
+                    style="background-color:#e0e0e0; font-size:0; line-height:0; width:1px; height:56px;"></td></tr>
+          </table>
+        </td>
+        <!-- Spacer — 14 px -->
+        <td width="14" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+        <!-- Wordmark — 184 px cell, height 64 px, transparent background -->
+        <td width="184" valign="middle" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:16px 0; vertical-align:middle; text-align:center;">
+          <img src="https://static.tildacdn.com/tild3031-6636-4536-b035-386239356236/CDC_name.png"
+               height="64" alt="Cableway Development Company"
+               style="display:block; height:64px; width:auto; border:0; margin:0 auto;">
+        </td>
+      </tr>
+
+      <!-- Divider -->
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height:1px; background-color:#e0e0e0; font-size:1px; line-height:1px;"></td>
+      </tr>
+
+      <!-- Contact 2×2 — table-layout:fixed, explicit 50% columns -->
+      <tr>
+        <td colspan="6" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:10px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                 style="width:100%; border-collapse:collapse; table-layout:fixed;">
+            <tr>
+              <td width="50%" valign="middle"
+                  style="width:50%; padding:0 32px 8px 0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                     width="24" height="24" alt="Phone"
+                     style="display:inline-block; vertical-align:middle; border:0;"><a
+                  href="tel:+39047188710"
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#333333; text-decoration:none; vertical-align:middle;
+                         margin-left:6px; display:inline-block; white-space:nowrap;"
+                >+39 0471 887 100</a>
+              </td>
+              <td width="50%" valign="middle"
+                  style="width:50%; padding:0 0 8px 0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                     width="24" height="24" alt="Email"
+                     style="display:inline-block; vertical-align:middle; border:0;"><a
+                  href="mailto:a.johnson@cdc.company"
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#333333; text-decoration:none; vertical-align:middle;
+                         margin-left:6px; display:inline-block; white-space:nowrap;"
+                >a.johnson@cdc.company</a>
+              </td>
+            </tr>
+            <tr>
+              <td width="50%" valign="middle"
+                  style="width:50%; padding:0 32px 0 0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                     width="24" height="24" alt="Location"
+                     style="display:inline-block; vertical-align:middle; border:0;"><span
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#555555; vertical-align:middle; margin-left:6px;
+                         display:inline-block; white-space:nowrap;"
+                >39040 Neustatt 6, Aldein (BZ), Italy</span>
+              </td>
+              <td width="50%" valign="middle"
+                  style="width:50%; padding:0; vertical-align:middle; white-space:nowrap;">
+                <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                     width="24" height="24" alt="Website"
+                     style="display:inline-block; vertical-align:middle; border:0;"><a
+                  href="https://cdc.company"
+                  style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                         color:#333333; text-decoration:none; vertical-align:middle;
+                         margin-left:6px; display:inline-block; white-space:nowrap;"
+                >cdc.company</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Divider -->
+      <tr>
+        <td colspan="6" height="1" bgcolor="#e0e0e0"
+            style="height:1px; background-color:#e0e0e0; font-size:1px; line-height:1px;"></td>
+      </tr>
+
+      <!-- Disclaimer -->
+      <tr>
+        <td colspan="6" bgcolor="#ffffff"
+            style="background-color:#ffffff; padding:9px 0 14px 0;">
+          <span style="font-family:Arial,Helvetica,sans-serif; font-size:10px; font-weight:400;
+                       color:#666666; line-height:1.45; display:block;">
+            This email and any files transmitted with it may contain information that is proprietary and confidential to CDC Cableway Development Company and its affiliates and is intended solely for the use of the individual or entity to whom it is addressed. If you have received this email in error, please return it to the sender and permanently delete it from your system.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- iPhone — FINAL-C -->
+  <div class="iphone-section">
+    <div class="iphone-label">FINAL-C ★ — Gmail iOS simulated (390 px, 0.672× scale)</div>
+    <div class="iphone-shell">
+      <div class="iphone-notch"><div class="iphone-notch-pill"></div></div>
+      <div class="iphone-screen">
+        <div class="gmail-subject-bar">Q3 Sustainability Review</div>
+        <div class="gmail-meta-bar">Alexandra Johnson &lt;a.johnson@cdc.company&gt;</div>
+        <div class="gmail-body">
+          <div class="iphone-sig-clip">
+            <div class="scale-to-iphone">
+              <table width="580" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+                   style="border-collapse:collapse; table-layout:fixed; background-color:#ffffff;">
+                <tr>
+                  <td width="104" valign="middle" bgcolor="#ffffff"
+                      style="background-color:#ffffff; padding:16px 0; vertical-align:middle;">
+                    <img src="https://static.tildacdn.com/tild6633-3962-4537-b532-383239613561/logo-cdc-badge.png"
+                         width="104" alt="CDC" style="display:block; border:0; height:auto;">
+                  </td>
+                  <td width="18" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+                  <td width="259" valign="middle" bgcolor="#ffffff"
+                      style="background-color:#ffffff; padding:16px 0; vertical-align:middle;">
+                    <p style="font-family:Arial,Helvetica,sans-serif; font-size:17px;
+                              font-weight:700; color:#1a1a2e; line-height:1.15; margin:0 0 5px 0;">
+                      Alexandra Johnson
+                    </p>
+                    <p style="font-family:Arial,Helvetica,sans-serif; font-size:14px;
+                              font-weight:400; color:#555555; line-height:1.3; margin:0;">
+                      Head of Sustainable Development
+                    </p>
+                  </td>
+                  <td width="1" valign="middle" bgcolor="#ffffff"
+                      style="background-color:#ffffff; padding:0; font-size:0; line-height:0; vertical-align:middle;">
+                    <table width="1" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                      <tr><td width="1" height="56" bgcolor="#e0e0e0"
+                              style="background-color:#e0e0e0; font-size:0; line-height:0; width:1px; height:56px;"></td></tr>
+                    </table>
+                  </td>
+                  <td width="14" bgcolor="#ffffff" style="background-color:#ffffff;"></td>
+                  <td width="184" valign="middle" bgcolor="#ffffff"
+                      style="background-color:#ffffff; padding:16px 0; vertical-align:middle; text-align:center;">
+                    <img src="https://static.tildacdn.com/tild3031-6636-4536-b035-386239356236/CDC_name.png"
+                         height="64" alt="Cableway Development Company"
+                         style="display:block; height:64px; width:auto; border:0; margin:0 auto;">
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6" height="1" bgcolor="#e0e0e0"
+                      style="height:1px; background-color:#e0e0e0; font-size:1px; line-height:1px;"></td>
+                </tr>
+                <tr>
+                  <td colspan="6" bgcolor="#ffffff" style="background-color:#ffffff; padding:10px 0;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                      <tr>
+                        <td width="50%" valign="middle"
+                            style="width:50%; padding:0 32px 8px 0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild3830-6235-4634-b839-666338353131/icon-phone.png"
+                               width="24" height="24" alt="Phone"
+                               style="display:inline-block; vertical-align:middle; border:0;"><a
+                            href="tel:+39047188710"
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#333333; text-decoration:none; vertical-align:middle;
+                                   margin-left:6px; display:inline-block; white-space:nowrap;"
+                          >+39 0471 887 100</a>
+                        </td>
+                        <td width="50%" valign="middle"
+                            style="width:50%; padding:0 0 8px 0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png"
+                               width="24" height="24" alt="Email"
+                               style="display:inline-block; vertical-align:middle; border:0;"><a
+                            href="mailto:a.johnson@cdc.company"
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#333333; text-decoration:none; vertical-align:middle;
+                                   margin-left:6px; display:inline-block; white-space:nowrap;"
+                          >a.johnson@cdc.company</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="50%" valign="middle"
+                            style="width:50%; padding:0 32px 0 0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png"
+                               width="24" height="24" alt="Location"
+                               style="display:inline-block; vertical-align:middle; border:0;"><span
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#555555; vertical-align:middle; margin-left:6px;
+                                   display:inline-block; white-space:nowrap;"
+                          >39040 Neustatt 6, Aldein (BZ), Italy</span>
+                        </td>
+                        <td width="50%" valign="middle"
+                            style="width:50%; padding:0; vertical-align:middle; white-space:nowrap;">
+                          <img src="https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png"
+                               width="24" height="24" alt="Website"
+                               style="display:inline-block; vertical-align:middle; border:0;"><a
+                            href="https://cdc.company"
+                            style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:400;
+                                   color:#333333; text-decoration:none; vertical-align:middle;
+                                   margin-left:6px; display:inline-block; white-space:nowrap;"
+                          >cdc.company</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes" style="margin-top:20px;">
+    <ul>
+      <li><span class="pro"><strong>Visual quality:</strong></span> Premium three-zone composition — badge / name+title / wordmark. The 580 px header is fully occupied. The refined 56 px separator and 16 px padding give the row an executive, unhurried feel. Wordmark at 64 px is confident without competing with the 17 px name.</li>
+      <li><span class="pro"><strong>Gmail iPhone safety — LOWEST RISK:</strong></span> Column layout is pixel-identical to the proven with-banner version. The right wordmark image occupies the same structural position as the award banner and provides equivalent content-pressure for Gmail iOS 580 px scale-down.</li>
+      <li><span class="pro"><strong>Contact table:</strong></span> <code>table-layout:fixed</code> + <code>width="50%"</code> on every contact TD (both attribute and inline style). Two independent structural defences against auto-layout reflow.</li>
+      <li><span class="neut"><strong>Trade-off:</strong></span> No orange company text line in the identity block — the company name appears only as the right-side wordmark image. The <code>alt</code> attribute ("Cableway Development Company") covers accessibility and plain-text fallback.</li>
+      <li><span class="pro"><strong>Implement this first.</strong></span> Minimum change from the production template: swap award banner src for wordmark src, adjust height attribute, add table-layout:fixed and 50% widths to contact table.</li>
+    </ul>
+  </div>
+</div>
+
+<hr class="section">
+
+
+<!-- ═══════════════════════════════════════ COMPARISON TABLE -->
+<div class="comparison-wrap">
+  <h2>Candidate Comparison</h2>
+  <table cellpadding="0" cellspacing="0" border="0" width="100%"
+         style="border-collapse:collapse;">
+    <tr style="background:#f5f5f5;">
+      <td style="padding:8px 12px; font-size:10px; font-weight:700; color:#888;
+                 width:110px; border-bottom:1px solid #e0e0e0;">Candidate</td>
+      <td style="padding:8px 12px; font-size:10px; font-weight:700; color:#888;
+                 border-bottom:1px solid #e0e0e0;">Visual quality</td>
+      <td style="padding:8px 12px; font-size:10px; font-weight:700; color:#888;
+                 border-bottom:1px solid #e0e0e0;">Right-side image anchor</td>
+      <td style="padding:8px 12px; font-size:10px; font-weight:700; color:#888;
+                 border-bottom:1px solid #e0e0e0;">Contact stability</td>
+      <td style="padding:8px 12px; font-size:10px; font-weight:700; color:#888;
+                 border-bottom:1px solid #e0e0e0;">Gmail iPhone safety</td>
+      <td style="padding:8px 12px; font-size:10px; font-weight:700; color:#888;
+                 border-bottom:1px solid #e0e0e0;">Production</td>
+    </tr>
+    <!-- Reference -->
+    <tr>
+      <td style="padding:10px 12px; font-size:12px; font-weight:700; color:#888;
+                 border-bottom:1px solid #f0f0f0; vertical-align:top;">Reference</td>
+      <td style="padding:10px 12px; font-size:12px; color:#444; border-bottom:1px solid #f0f0f0;">
+        Excellent — proven in production
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#2c7a2c; border-bottom:1px solid #f0f0f0;">
+        ✓ Award/banner image
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#2c7a2c; border-bottom:1px solid #f0f0f0;">
+        ✓ Proven stable
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#2c7a2c; border-bottom:1px solid #f0f0f0;">
+        ✓ Known-good
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#888; border-bottom:1px solid #f0f0f0;">
+        Not available — award cannot be used
+      </td>
+    </tr>
+    <!-- FINAL-B -->
+    <tr style="background:#fafafa;">
+      <td style="padding:10px 12px; font-size:12px; font-weight:700; color:#4a6fa5;
+                 border-bottom:1px solid #f0f0f0; vertical-align:top;">FINAL-B</td>
+      <td style="padding:10px 12px; font-size:12px; color:#2c7a2c; border-bottom:1px solid #f0f0f0;">
+        High — cleanest no-award design
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#b03030; border-bottom:1px solid #f0f0f0;">
+        ✗ None
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#b03030; border-bottom:1px solid #f0f0f0;">
+        Standard — no explicit widths
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#b03030; border-bottom:1px solid #f0f0f0;">
+        ⚠ High risk — unvalidated
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#888; border-bottom:1px solid #f0f0f0;">
+        Conditional — requires iPhone test first
+      </td>
+    </tr>
+    <!-- FINAL-C -->
+    <tr style="background:#fff8f4;">
+      <td style="padding:10px 12px; font-size:12px; font-weight:700; color:#F16623;
+                 vertical-align:top;">FINAL-C ★</td>
+      <td style="padding:10px 12px; font-size:12px; color:#2c7a2c;">
+        High — balanced three-zone header
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#2c7a2c; font-weight:700;">
+        ✓ Wordmark image (184 px cell)
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#2c7a2c; font-weight:700;">
+        ✓ table-layout:fixed + 50% per TD
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#2c7a2c; font-weight:700;">
+        ✓ Lowest risk — proven column structure
+      </td>
+      <td style="padding:10px 12px; font-size:12px; color:#F16623; font-weight:700;">
+        ★ Implement and test first
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════ FINAL RECOMMENDATION -->
+<div class="final-rec">
+  <h2>Final Recommendation: Implement FINAL-C</h2>
+  <p>
+    <strong>FINAL-C is the candidate to implement in the live generator and send as a real test email.</strong>
+    It is the minimum structural change from the current production template: the award banner image src is replaced with the transparent CDC wordmark image, the right cell height attribute is updated to <code>height="64"</code>, and the contact inner table gains <code>table-layout:fixed</code> with <code>width="50%"</code> on each TD. No other structural changes are needed.
+  </p>
+  <p>
+    The right-side wordmark image occupies the same 184 px column that the award banner occupied — it provides the same content-pressure mechanism that makes Gmail iOS scale the full 580 px table proportionally. The contact 50% columns add a second layer of insurance against reflow if that scaling behaves differently from the award-banner baseline.
+  </p>
+  <p>
+    <strong>After FINAL-C is validated on iPhone,</strong> run a second test with FINAL-B. If the badge image alone proves sufficient to anchor the table at 580 px, FINAL-B can be adopted as the production signature instead — it is visually the cleaner design. But FINAL-C should ship first.
+  </p>
+</div>
+
+
+<p class="page-footer">
+  Prototype &middot; Prototypes/final-signature-candidates.html &middot; Not committed &middot; Live generator unchanged &middot; 2026-05-19
+</p>
+
+</body>
+</html>
