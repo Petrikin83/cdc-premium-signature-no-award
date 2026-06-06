@@ -39,11 +39,11 @@ function buildAppleMailSignature(data) {
                 background-color: #ffffff;">
         ${_esc(fullName)}
       </p>
-      <p style="font-family: Arial, Helvetica, sans-serif; font-size: ${titleFontSize + 1}px;
+      ${jobTitle ? `<p style="font-family: Arial, Helvetica, sans-serif; font-size: ${titleFontSize + 1}px;
                 font-weight: 400; color: #555555; line-height: 1.3; margin: 0 0 3px 0;
                 background-color: #ffffff;">
         ${_esc(jobTitle)}
-      </p>
+      </p>` : ''}
       <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
                 font-weight: 600; color: #F16623; line-height: 1.3; margin: 0;
                 background-color: #ffffff;">

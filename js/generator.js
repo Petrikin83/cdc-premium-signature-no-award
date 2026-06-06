@@ -98,8 +98,7 @@
 
     // Job title
     const titleRes  = CDC_VALIDATION.validateJobTitle(fields.jobTitle.value);
-    const titleText = titleRes.valid ? titleRes.value : (CDC_VALIDATION.trimField(fields.jobTitle.value) || 'Job Title');
-    if (!titleRes.valid) errs.jobTitle = titleRes.error;
+    const titleText = titleRes.value;
 
     const titleSizing = CDC_VALIDATION.titleFontSize(titleText);
     if (titleSizing.warning) warnings.title = titleSizing.warning;

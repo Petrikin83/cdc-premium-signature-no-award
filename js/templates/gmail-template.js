@@ -47,10 +47,10 @@ function buildGmailSignature(data) {
                 font-weight: 700; color: #1a1a2e; line-height: 1.15; margin: 0 0 5px 0;">
         ${_esc(fullName)}
       </p>
-      <p style="font-family: Arial, Helvetica, sans-serif; font-size: ${titleFontSize}px;
+      ${jobTitle ? `<p style="font-family: Arial, Helvetica, sans-serif; font-size: ${titleFontSize}px;
                 font-weight: 400; color: #555555; line-height: 1.3; margin: 0 0 3px 0;">
         ${_esc(jobTitle)}
-      </p>
+      </p>` : ''}
       <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
                 font-weight: 600; color: #F16623; line-height: 1.3; margin: 0;">
         ${_esc(CDC_CONFIG.brand.companyDisplay)}

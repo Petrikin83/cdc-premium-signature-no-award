@@ -15,7 +15,6 @@ const CDC_VALIDATION = {
 
   validateJobTitle(val) {
     const v = this.trimField(val);
-    if (!v) return { valid: false, error: 'Job title is required.' };
     return { valid: true, value: v };
   },
 
