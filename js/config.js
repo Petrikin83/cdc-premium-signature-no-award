@@ -7,7 +7,7 @@ const CDC_CONFIG = {
     email:    'https://static.tildacdn.com/tild6464-6630-4135-a161-363032613664/icon-email.png',
     web:      'https://static.tildacdn.com/tild3433-6265-4665-b766-326237343934/icon-web.png',
     location: 'https://static.tildacdn.com/tild6339-3066-4430-b862-626262306630/icon-location.png',
-    linkedin: 'https://petrikin83.github.io/cdc-premium-signature-no-award/signature-assets/icon-linkedin.svg',
+    linkedin: 'https://static.tildacdn.com/tild6165-6139-4361-a336-333733336262/icon-linkedin.png',
   },
   brand: {
     companyDisplay:   'Cableway Development Company',
