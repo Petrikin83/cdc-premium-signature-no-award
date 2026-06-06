@@ -13,6 +13,7 @@
     website:    $('website'),
     officeAddr: $('office-address'),
     disclaimer: $('disclaimer-text'),
+    linkedinUrl: $('linkedin-url'),
   };
 
   const errorEls = {
@@ -22,7 +23,13 @@
     phone:     $('phone-error'),
     email:     $('email-error'),
     website:   $('website-error'),
+    linkedin:  $('linkedin-error'),
   };
+
+  const linkedinToggle     = $('linkedin-toggle');
+  const linkedinFieldGroup = $('linkedin-field-group');
+  const phoneFieldGroup    = $('phone-field-group');
+  const phoneRequiredStar  = $('phone-required-star');
 
   const previewFrame     = $('preview-frame');
   const previewWarnings  = $('preview-warnings');
@@ -45,8 +52,9 @@
 
   // ── Init ───────────────────────────────────────────────────────────────────
   function init() {
-    fields.website.value    = CDC_CONFIG.brand.websiteDefault;
-    fields.disclaimer.value = CDC_CONFIG.disclaimer.default;
+    fields.website.value     = CDC_CONFIG.brand.websiteDefault;
+    fields.disclaimer.value  = CDC_CONFIG.disclaimer.default;
+    fields.linkedinUrl.value = CDC_CONFIG.brand.linkedinDefault;
 
     Object.values(fields).forEach(el => {
       if (el) el.addEventListener('input', render);
@@ -58,6 +66,7 @@
     disclaimerToggle.addEventListener('click', toggleDisclaimer);
     disclaimerReset.addEventListener('click', resetDisclaimer);
     addressToggle.addEventListener('click', toggleAddress);
+    linkedinToggle.addEventListener('change', toggleLinkedin);
 
     // Blur listeners — mark field touched so its error becomes visible
     Object.keys(errorEls).forEach(key => {
@@ -95,9 +104,25 @@
     const titleSizing = CDC_VALIDATION.titleFontSize(titleText);
     if (titleSizing.warning) warnings.title = titleSizing.warning;
 
-    // Phone
-    const phoneRes = CDC_VALIDATION.validatePhone(fields.phone.value);
-    if (!phoneRes.valid) errs.phone = phoneRes.error;
+    // Phone / LinkedIn
+    const useLinkedin = linkedinToggle.checked;
+    let phoneRes = { valid: true, value: '', telHref: '' };
+    let linkedinRes = { valid: true, value: CDC_CONFIG.brand.linkedinDefault };
+
+    if (useLinkedin) {
+      const lv = (fields.linkedinUrl.value || '').trim();
+      if (!lv) {
+        linkedinRes = { valid: false, error: 'LinkedIn URL is required.' };
+      } else if (!/^https?:\/\//i.test(lv)) {
+        linkedinRes = { valid: false, error: 'Enter a full URL starting with https://' };
+      } else {
+        linkedinRes = { valid: true, value: lv };
+      }
+      if (!linkedinRes.valid) errs.linkedin = linkedinRes.error;
+    } else {
+      phoneRes = CDC_VALIDATION.validatePhone(fields.phone.value);
+      if (!phoneRes.valid) errs.phone = phoneRes.error;
+    }
 
     // Email
     const emailRes = CDC_VALIDATION.validateEmail(fields.email.value);
@@ -121,16 +146,18 @@
     const data = {
       firstName,
       lastName,
-      jobTitle:       titleText,
-      phone:          phoneRes.valid ? phoneRes.value : (fields.phone.value.trim() || '+971 50 000 00 00'),
-      email:          emailRes.valid ? emailRes.value : (fields.email.value.trim() || 'name@cdc.company'),
+      jobTitle:        titleText,
+      phone:           phoneRes.valid ? phoneRes.value : (fields.phone.value.trim() || '+971 50 000 00 00'),
+      email:           emailRes.valid ? emailRes.value : (fields.email.value.trim() || 'name@cdc.company'),
       resolvedAddress: addrRes.value || CDC_CONFIG.brand.corporateAddress,
-      disclaimerText: fields.disclaimer.value.trim() || CDC_CONFIG.disclaimer.default,
-      nameFontSize:   nameSizing.size,
-      titleFontSize:  titleSizing.size,
-      telHref:        phoneRes.valid ? phoneRes.telHref : 'tel:+971500000000',
-      websiteDisplay: webRes.valid ? webRes.display : CDC_CONFIG.brand.websiteDefault,
-      websiteHref:    webRes.valid ? webRes.href    : `https://${CDC_CONFIG.brand.websiteDefault}`,
+      disclaimerText:  fields.disclaimer.value.trim() || CDC_CONFIG.disclaimer.default,
+      nameFontSize:    nameSizing.size,
+      titleFontSize:   titleSizing.size,
+      telHref:         phoneRes.valid ? phoneRes.telHref : 'tel:+971500000000',
+      websiteDisplay:  webRes.valid ? webRes.display : CDC_CONFIG.brand.websiteDefault,
+      websiteHref:     webRes.valid ? webRes.href    : `https://${CDC_CONFIG.brand.websiteDefault}`,
+      useLinkedin,
+      linkedinHref:    linkedinRes.valid ? linkedinRes.value : CDC_CONFIG.brand.linkedinDefault,
     };
 
     currentSignatureHtml = buildGmailSignature(data);
@@ -263,16 +290,29 @@
     }, 2000);
   }
 
+  // ── LinkedIn toggle ────────────────────────────────────────────────────────
+  function toggleLinkedin() {
+    const on = linkedinToggle.checked;
+    phoneFieldGroup.hidden    = on;
+    linkedinFieldGroup.hidden = !on;
+    render();
+  }
+
   // ── Reset ──────────────────────────────────────────────────────────────────
   function resetForm() {
-    fields.firstName.value  = '';
-    fields.lastName.value   = '';
-    fields.jobTitle.value   = '';
-    fields.phone.value      = '';
-    fields.email.value      = '';
-    fields.website.value    = CDC_CONFIG.brand.websiteDefault;
-    fields.officeAddr.value = '';
-    fields.disclaimer.value = CDC_CONFIG.disclaimer.default;
+    fields.firstName.value   = '';
+    fields.lastName.value    = '';
+    fields.jobTitle.value    = '';
+    fields.phone.value       = '';
+    fields.email.value       = '';
+    fields.website.value     = CDC_CONFIG.brand.websiteDefault;
+    fields.officeAddr.value  = '';
+    fields.disclaimer.value  = CDC_CONFIG.disclaimer.default;
+    fields.linkedinUrl.value = CDC_CONFIG.brand.linkedinDefault;
+
+    linkedinToggle.checked    = false;
+    phoneFieldGroup.hidden    = false;
+    linkedinFieldGroup.hidden = true;
 
     collapseSection(addressSection, addressToggle);
     collapseSection(disclaimerSection, disclaimerToggle);

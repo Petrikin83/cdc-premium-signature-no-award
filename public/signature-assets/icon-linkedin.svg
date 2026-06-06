@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-label="LinkedIn">
+  <circle cx="24" cy="24" r="21" fill="none" stroke="#F16623" stroke-width="2.2"/>
+  <!-- i: dot -->
+  <circle cx="18" cy="17" r="2" fill="#F16623"/>
+  <!-- i: bar -->
+  <rect x="16" y="21" width="4" height="12" rx="1" fill="#F16623"/>
+  <!-- n: left bar + arch + right bar -->
+  <path d="M22 21 L26 21 L26 23.5 C27 21.5 28.5 21 30 21 C33 21 34 23 34 26 L34 33 L30 33 L30 26.5 C30 24.5 29.5 24 28 24 C26.5 24 26 25 26 26.5 L26 33 L22 33 Z" fill="#F16623"/>
+</svg>

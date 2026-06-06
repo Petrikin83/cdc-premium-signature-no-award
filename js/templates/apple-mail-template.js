@@ -4,6 +4,7 @@ function buildAppleMailSignature(data) {
     resolvedAddress, disclaimerText,
     nameFontSize, titleFontSize,
     telHref, websiteDisplay, websiteHref,
+    useLinkedin, linkedinHref,
   } = data;
 
   const fullName = `${firstName} ${lastName}`;
@@ -90,11 +91,21 @@ function buildAppleMailSignature(data) {
         style="background-color: #ffffff; padding: 10px 0;">
       <table width="580" cellpadding="0" cellspacing="0" border="0"
              style="width: 580px; border-collapse: collapse; table-layout: fixed;">
-        <!-- Row 1: phone | email -->
+        <!-- Row 1: phone (or linkedin) | email -->
         <tr>
           <td width="290" valign="middle" bgcolor="#ffffff"
               style="width: 290px; background-color: #ffffff; padding: 0 32px 8px 0; vertical-align: middle; white-space: nowrap;">
-            <img src="${CDC_CONFIG.assets.phone}"
+            ${useLinkedin
+              ? `<img src="${CDC_CONFIG.assets.linkedin}"
+                 width="24" height="24" alt="LinkedIn"
+                 style="display: inline-block; vertical-align: middle; border: 0;"><a
+              href="${_esc(linkedinHref)}"
+              style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                     font-weight: 400; color: #333333 !important; text-decoration: none;
+                     vertical-align: middle; margin-left: 6px; display: inline-block;
+                     white-space: nowrap; background-color: #ffffff;"
+            >LinkedIn</a>`
+              : `<img src="${CDC_CONFIG.assets.phone}"
                  width="24" height="24" alt="Phone"
                  style="display: inline-block; vertical-align: middle; border: 0;"><a
               href="${_esc(telHref)}"
@@ -102,7 +113,7 @@ function buildAppleMailSignature(data) {
                      font-weight: 400; color: #333333 !important; text-decoration: none;
                      vertical-align: middle; margin-left: 6px; display: inline-block;
                      white-space: nowrap; background-color: #ffffff;"
-            >${_phoneDisplay(phone)}</a>
+            >${_phoneDisplay(phone)}</a>`}
           </td>
           <td width="290" valign="middle" bgcolor="#ffffff"
               style="width: 290px; background-color: #ffffff; padding: 0 0 8px 0; vertical-align: middle; white-space: nowrap;">

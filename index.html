@@ -50,12 +50,29 @@
         </div>
 
         <!-- Phone -->
-        <div class="field-group">
-          <label for="phone">Phone <span class="required">*</span></label>
+        <div class="field-group" id="phone-field-group">
+          <label for="phone">Phone <span class="required" id="phone-required-star">*</span></label>
           <input type="tel" id="phone" name="phone"
                  autocomplete="tel" placeholder="+971 50 421 35 70">
           <div class="field-hint">For better readability, enter phone with spaces &mdash; e.g. +971 50 421 35 70. Displayed exactly as entered.</div>
           <div class="field-error" id="phone-error" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- LinkedIn toggle -->
+        <div class="field-group linkedin-toggle-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="linkedin-toggle">
+            <span>Replace phone with LinkedIn</span>
+          </label>
+          <div class="field-hint">Shows company LinkedIn page instead of phone number in the signature.</div>
+        </div>
+
+        <!-- LinkedIn URL (shown when toggle is checked) -->
+        <div class="field-group" id="linkedin-field-group" hidden>
+          <label for="linkedin-url">LinkedIn URL <span class="required">*</span></label>
+          <input type="url" id="linkedin-url" name="linkedin-url"
+                 placeholder="https://www.linkedin.com/company/...">
+          <div class="field-error" id="linkedin-error" role="alert" aria-live="polite"></div>
         </div>
 
         <!-- Email -->
